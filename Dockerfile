@@ -62,3 +62,6 @@ RUN git clone https://github.com/alexshidagoatnocap/skybrush-server \
 RUN git clone https://github.com/alexshidagoatnocap/ap-swarm-launcher \
     && cd ap-swarm-launcher \
     && uv sync
+
+# TODO: Look into multi-stage builds for a build and release image, this could help reduce the final image size
+# Look into using a lightweight image such as alpine

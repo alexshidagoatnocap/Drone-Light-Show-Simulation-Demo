@@ -32,12 +32,13 @@ RUN wget https://www.python.org/ftp/python/3.11.3/Python-3.11.3.tgz \
     && make -j 12 \
     && make altinstall \
     && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
+    && cd .. \
     && rm -rf Python-3.11.3 \
     && rm  Python-3.11.3.tgz \
     && cd ~
 
-# Build SITL
-RUN git clone https://github.com/skybrush-io/ardupilot \
+# Build SITL TODO: Fork repo
+RUN git clone https://github.com/skybrush-io/ardupilot \ 
     && cd ardupilot \
     && git checkout CMCopter-4.2 \
     && git submodule update --init --recursive \
@@ -50,16 +51,16 @@ RUN git clone https://github.com/skybrush-io/ardupilot \
     && deactivate \
     && cd ~
 
-# Build Skybrush Server
+# Build Skybrush Server TODO: Fork the repo and change the requirements there
 RUN git clone https://github.com/skybrush-io/skybrush-server \
     && pip3 install uv \
     && cd skybrush-server \
-    # Delete pro and collmot dependency requirements
+    # Delete pro and collmot dependency requirements (haram)
     && sed -i '61,80d' pyproject.toml && sed -i '53d' pyproject.toml \
     && uv sync \
     && cd ~
 
-# Build Swarm Launcher
+# Build Swarm Launcher TODO: Fork the repo 
 RUN git clone https://github.com/skybrush-io/ap-swarm-launcher \
     && cd ap-swarm-launcher \
     && uv sync

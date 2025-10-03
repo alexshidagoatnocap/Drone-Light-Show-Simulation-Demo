@@ -10,22 +10,26 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     vim \
     nano \
-    g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Build SITL
-RUN git clone https://github.com/alexshidagoatnocap/ardupilot \ 
+RUN git clone  https://github.com/alexshidagoatnocap/ardupilot \ 
     && cd ardupilot \
     && git checkout CMCopter-4.6 \
     && git submodule update --init --recursive 
-
+    # # Replace all occurrences of -dead-strip with --dead_strip for Linux compatibility
+    # && find . -type f -exec sed -i 's/-dead-strip/--dead_strip/g' {} + 
 
 RUN cd ardupilot \
     && python3 -m venv .venv \
     && source .venv/bin/activate \
+    # && cd modules \
+    # && rm -r libskybrush \
+    # && git clone https://github.com/skybrush-io/libskybrush \
+    # && cd .. \
     && pip install -U pip wheel setuptools \
     && pip install dronecan \
-    && pip install empy==3.3.2 \
+    && pip install empy==3.3.4 \
     && pip install future intelhex pexpect \
     && ./waf configure --debug --board sitl \
     && ./waf copter \

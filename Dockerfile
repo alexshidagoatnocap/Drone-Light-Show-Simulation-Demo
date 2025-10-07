@@ -1,6 +1,6 @@
-FROM python:slim
+FROM python:3.13-slim
 
-WORKDIR /home/root
+WORKDIR /home/aiaautd
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y \
@@ -39,3 +39,9 @@ RUN git clone https://github.com/alexshidagoatnocap/skybrush-server \
 RUN git clone https://github.com/alexshidagoatnocap/ap-swarm-launcher \
     && cd ap-swarm-launcher \
     && uv sync
+
+RUN useradd -ms /bin/bash aiaautd
+USER aiaautd
+
+EXPOSE 5000
+EXPOSE 5001

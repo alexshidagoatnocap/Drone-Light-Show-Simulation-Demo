@@ -62,3 +62,9 @@ RUN git clone https://github.com/alexshidagoatnocap/skybrush-server \
 RUN git clone https://github.com/alexshidagoatnocap/ap-swarm-launcher \
     && cd ap-swarm-launcher \
     && uv sync
+
+# Expose port for http and web socket
+EXPOSE 5000
+
+# Expose port for TCP connection for server to connect to skybrush live desktop app
+EXPOSE 5001
